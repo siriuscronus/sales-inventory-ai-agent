@@ -27,3 +27,6 @@ Thumbs.db
 build/
 dist/
 *.egg-info/
+
+# Local Qdrant storage
+data/qdrant/

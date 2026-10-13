@@ -1,2 +1,4 @@
 sentence-transformers
-qdrant-client
+qdrant-client==1.19.1
+portalocker==3.2.0
+pywin32==312; platform_system == "Windows"
