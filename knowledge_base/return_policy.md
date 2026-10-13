@@ -2,7 +2,7 @@
 
 > Documento ficticio creado exclusivamente para el prototipo académico del
 > Piedmont Metals Sales & Inventory AI Agent.
-> No representa una política comercial oficial de Piedmont Metals of NC.
+> No representa una política comercial oficial de PMONC.
 
 ## Objetivo
 
