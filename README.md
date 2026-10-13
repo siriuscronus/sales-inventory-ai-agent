@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Piedmont Metals Sales & Inventory AI Agent es un prototipo de agente de inteligencia artificial diseñado para apoyar las operaciones comerciales, de inventario y atención interna de Piedmont Metals of NC.
+Piedmont Metals Sales & Inventory AI Agent es un prototipo de agente de inteligencia artificial diseñado para apoyar las operaciones comerciales, de inventario y atención interna de PMONC.
 
 El objetivo del sistema es permitir que empleados autorizados puedan consultar información relacionada con productos, inventario, precios, cotizaciones y políticas operativas mediante una interfaz conversacional.
 
@@ -18,7 +18,7 @@ El agente combinará:
 
 ## Problemática
 
-Piedmont Metals of NC maneja productos y materiales utilizados en proyectos de construcción y operaciones comerciales.
+PMONC maneja productos y materiales utilizados en proyectos de construcción y operaciones comerciales.
 
 Parte de la información necesaria para atender una venta o preparar una cotización puede encontrarse distribuida entre diferentes fuentes, procesos y sistemas.
 
@@ -62,7 +62,7 @@ El MVP se concentrará inicialmente en cuatro capacidades principales:
 3. Calcular cotizaciones básicas.
 4. Consultar políticas y procedimientos internos.
 
-El prototipo utilizará datos simulados o anonimizados para evitar publicar información comercial sensible de Piedmont Metals of NC.
+El prototipo utilizará datos simulados o anonimizados para evitar publicar información comercial sensible de PMONC.
 
 ---
 
