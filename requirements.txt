@@ -4,3 +4,5 @@ portalocker==3.2.0
 pywin32==312; platform_system == "Windows"
 google-genai
 python-dotenv
+fastapi
+uvicorn
