@@ -1,0 +1,16 @@
+{
+    "name": "Sales & Inventory AI Agent",
+
+    "image": "mcr.microsoft.com/devcontainers/universal:2",
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance"
+            ]
+        }
+    },
+
+    "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && echo 'export PATH=\"$HOME/.local/bin:$PATH\"' >> ~/.bashrc && $HOME/.local/bin/uv sync --locked"
+}
