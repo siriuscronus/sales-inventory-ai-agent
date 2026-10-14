@@ -2,59 +2,103 @@
 
 ## Piedmont Metals Sales & Inventory AI Agent
 
-## Objetivo de arquitectura
+## 1. Objetivo de arquitectura
 
-La solución permitirá a usuarios de ventas y operaciones consultar información de inventario, precios, productos, cotizaciones y políticas internas mediante una interfaz conversacional.
+La solución permite a usuarios de ventas y operaciones consultar información relacionada con inventario, precios, productos, cotizaciones y procedimientos mediante una interfaz conversacional.
 
-El agente decidirá qué mecanismo utilizar según el tipo de solicitud:
+El sistema combina información operativa estructurada, conocimiento documental y modelos de lenguaje, manteniendo separadas las fuentes de verdad:
 
-- Datos operativos: Tools + base de datos.
-- Conocimiento documental: RAG.
-- Interpretación y generación de respuesta: LLM.
+- **Datos operativos:** Tools + SQLite.
+- **Conocimiento documental:** RAG + Qdrant.
+- **Interpretación y generación:** Gemini.
+- **Interoperabilidad:** Model Context Protocol (MCP).
+
+El agente evita utilizar el LLM cuando una consulta puede resolverse localmente mediante reglas, routers o herramientas operativas.
 
 ---
 
-## C4 Model - Level 2
+## 2. C4 Model - Level 2
 
 ```mermaid
 flowchart LR
 
-    USER[Usuario de Ventas / Operaciones]
+    USER["Usuario de Ventas / Operaciones"]
 
-    subgraph PMONC["Piedmont Metals Sales & Inventory AI Agent"]
+    subgraph SYSTEM["Piedmont Metals Sales & Inventory AI Agent"]
 
-        UI["Web Chat\nStreamlit"]
+        UI["Web Chat
+        Streamlit
+        Puerto 8501"]
 
-        API["Backend API\nFastAPI"]
+        API["Backend API
+        FastAPI
+        Puerto 8000"]
 
-        AGENT["AI Agent\nOrquestación"]
+        SEC["Security Gateway
+        Input Guardrails
+        PII Protection
+        Scope Control"]
 
-        TOOLS["Tools / MCP Layer"]
+        AGENT["AI Agent / Orchestrator
+        Routing
+        Tool Selection
+        Context Composition"]
 
-        DB[("Operational Database\nSQLite")]
+        TOOLS["Business Tools
+        Inventory
+        Pricing
+        Quotes
+        Product Search
+        Low Stock"]
 
-        RAG["RAG Service"]
+        RAG["RAG Service
+        Chunking
+        Embeddings
+        Semantic Retrieval"]
 
-        VDB[("Vector Database\nQdrant")]
+        MCP["MCP Server
+        Streamable HTTP
+        Puerto 8001
+        6 Tools"]
 
-        KB["Knowledge Base\nPolicies / Procedures / Catalog"]
+        DB[("SQLite Database
+        Products
+        Inventory
+        Prices")]
+
+        VDB[("Qdrant Vector Store
+        Knowledge Embeddings")]
+
+        KB["Knowledge Base
+        Policies
+        Procedures
+        SKU Standards"]
     end
 
-    LLM["LLM Provider\nGemini / Local Model"]
+    GEMINI["Google Gemini
+    3.8 Flash
+    3.6 Flash
+    3.5 Flash-Lite
+    Fallback"]
 
-    QB["QuickBooks\nFuture Integration"]
+    MCPCLIENT["External MCP Client"]
 
     USER --> UI
-    UI --> API
-    API --> AGENT
+    UI -->|HTTP POST /agent| API
+
+    API --> SEC
+    SEC --> AGENT
 
     AGENT --> TOOLS
     TOOLS --> DB
 
     AGENT --> RAG
     RAG --> VDB
-    KB --> VDB
+    KB --> RAG
 
-    AGENT --> LLM
+    AGENT --> GEMINI
 
-    TOOLS -. Future .-> QB
+    MCPCLIENT -->|MCP / Streamable HTTP| MCP
+
+    MCP --> TOOLS
+    MCP --> RAG

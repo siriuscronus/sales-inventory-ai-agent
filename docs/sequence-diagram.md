@@ -1,49 +1,43 @@
-# Diagrama de Secuencia
+# Diagramas de Secuencia
 
-## Caso: consulta de inventario y cotización
+## Piedmont Metals Sales & Inventory AI Agent
 
-Escenario:
+Este documento representa los principales flujos de ejecución
+implementados en el prototipo.
 
-> El usuario necesita 20 I-Joists de 20 pies y quiere saber si hay suficiente inventario y cuál sería el subtotal.
+---
+
+## 1. Consulta operacional simple
+
+### Caso
+
+> ¿Cuánto cuesta el SKU IJOIST-16-20?
+
+Esta consulta puede resolverse localmente sin utilizar el LLM.
 
 ```mermaid
 sequenceDiagram
 
     actor U as Usuario
-    participant UI as Web Chat
+    participant UI as Streamlit
     participant API as FastAPI
-    participant A as AI Agent
-    participant T as Tools
+    participant SEC as Security Gateway
+    participant A as Orchestrator
+    participant T as Pricing Tool
     participant DB as SQLite
-    participant LLM as LLM
 
-    U->>UI: Necesito 20 I-Joists de 20 pies.<br/>¿Hay suficiente inventario y cuál es el subtotal?
+    U->>UI: ¿Cuánto cuesta el SKU IJOIST-16-20?
+    UI->>API: POST /agent
+    API->>SEC: Validar consulta
+    SEC-->>API: Consulta permitida
 
-    UI->>API: Enviar consulta
-    API->>A: Procesar solicitud
-
-    A->>A: Identificar intención
-
-    A->>T: search_product("I-Joist 20 ft")
-    T->>DB: Buscar producto
-    DB-->>T: SKU encontrado
-    T-->>A: Producto identificado
-
-    A->>T: check_inventory(SKU)
-    T->>DB: Consultar inventario
-    DB-->>T: 14 unidades
-    T-->>A: Stock = 14
-
+    API->>A: run_agent(query)
+    A->>A: Identificar intención: price
     A->>T: get_product_price(SKU)
-    T->>DB: Consultar precio
-    DB-->>T: Precio unitario
-    T-->>A: Precio
+    T->>DB: SELECT producto y precio
+    DB-->>T: Precio = 42.50
+    T-->>A: Resultado estructurado
 
-    A->>A: Comparar cantidad solicitada vs disponible
-
-    A->>LLM: Generar respuesta con resultados
-    LLM-->>A: Respuesta redactada
-
-    A-->>API: Resultado
-    API-->>UI: Respuesta final
-    UI-->>U: Mostrar disponibilidad,<br/>faltante y subtotal posible
+    A-->>API: Respuesta local
+    API-->>UI: JSON
+    UI-->>U: Precio unitario $42.50
