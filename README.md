@@ -1,113 +1,78 @@
-# Piedmont Metals Sales & Inventory AI Agent
+# Agente de IA de Ventas e Inventario para Piedmont Metals
 
-## Descripción
+## Aviso académico
 
-**Piedmont Metals Sales & Inventory AI Agent** es un prototipo académico de un agente de inteligencia artificial orientado a apoyar procesos de ventas, inventario y consulta operativa mediante una interfaz conversacional.
+Este repositorio contiene un prototipo académico desarrollado exclusivamente con fines educativos y de demostración.
 
-El sistema permite consultar información relacionada con:
-
-- productos;
-- inventario;
-- precios;
-- cotizaciones;
-- productos con bajo inventario;
-- políticas y procedimientos operativos.
-
-La solución combina **Tools**, una base de datos operacional, **RAG**, una base vectorial, un modelo de lenguaje y una capa de interoperabilidad mediante **Model Context Protocol (MCP)**.
-
-> **Importante:** todos los productos, precios, cantidades, procedimientos y demás datos utilizados en este repositorio son ficticios o fueron creados exclusivamente para fines académicos y demostrativos.
+No constituye un sistema oficial de Piedmont Metals ni está conectado a ningún entorno de producción. Los productos, precios, cantidades de inventario, políticas y procedimientos utilizados en el proyecto son datos ficticios creados para demostrar el funcionamiento de la solución.
 
 ---
 
-## Problemática
+## Descripción
 
-En una operación comercial de materiales de construcción, el personal puede necesitar consultar información distribuida entre diferentes fuentes para responder preguntas como:
+El **Agente de IA de Ventas e Inventario para Piedmont Metals** es un prototipo conversacional orientado a apoyar consultas relacionadas con ventas, inventario y procedimientos operativos.
+
+El sistema permite consultar información como:
+
+- disponibilidad de productos;
+- precios;
+- búsqueda por SKU o descripción;
+- cotizaciones básicas;
+- productos con bajo inventario;
+- procedimientos y políticas internas de demostración.
+
+El agente utiliza diferentes fuentes dependiendo del tipo de pregunta.
+
+---
+
+## Problema de negocio
+
+En una operación comercial, el personal puede necesitar consultar información distribuida entre diferentes fuentes para responder preguntas como:
 
 - ¿Tenemos suficiente inventario?
-- ¿Cuál es el precio vigente de un producto?
+- ¿Cuál es el precio de este producto?
 - ¿Cuál es el SKU correcto?
-- ¿Cuánto costaría una determinada cantidad?
-- ¿Qué productos necesitan reposición?
-- ¿Qué procedimiento debe seguirse cuando no existe suficiente inventario?
-- ¿Existe un producto alternativo?
+- ¿Cuánto costaría una cantidad determinada?
+- ¿Qué procedimiento se debe seguir cuando no existe suficiente inventario?
 
-Cuando estas consultas requieren revisar manualmente múltiples fuentes, aumenta el tiempo de respuesta y existe mayor posibilidad de errores.
+Realizar estas consultas manualmente puede aumentar el tiempo de respuesta y la posibilidad de errores.
 
-El prototipo demuestra cómo un agente de IA puede centralizar este tipo de consultas y seleccionar automáticamente la fuente de información apropiada.
+El propósito del agente es centralizar estas consultas y seleccionar automáticamente la fuente adecuada para responderlas.
 
 ---
 
 ## Objetivo
 
-Construir un agente de inteligencia artificial capaz de interpretar solicitudes relacionadas con ventas e inventario y decidir qué recurso utilizar para responderlas.
+Desarrollar un agente de inteligencia artificial capaz de interpretar consultas de ventas e inventario y decidir cuándo utilizar:
 
-La solución implementa:
-
-- **SQLite** para información operacional;
-- **Business Tools** para inventario, precios, búsqueda y cotización;
-- **RAG** para conocimiento documental;
-- **Qdrant** como base vectorial;
-- **Sentence Transformers** para embeddings;
-- **Google Gemini** para razonamiento y generación de respuestas;
-- **FastAPI** como Backend API;
-- **Streamlit** como interfaz conversacional;
-- **MCP Server** para exponer las capacidades del sistema mediante Model Context Protocol;
-- **Security Guardrails** para controlar alcance y entradas;
-- **pytest** para pruebas automatizadas.
-
----
-
-## Alcance del MVP
-
-El prototipo implementa las siguientes capacidades:
-
-1. Consultar inventario.
-2. Consultar precios.
-3. Buscar productos.
-4. Calcular cotizaciones básicas.
-5. Identificar productos con bajo inventario.
-6. Consultar políticas y procedimientos mediante RAG.
-7. Combinar información operacional y documental.
-8. Rechazar consultas fuera del dominio del agente.
-9. Exponer Tools mediante MCP.
-10. Proporcionar una interfaz Web Chat.
+- herramientas operativas;
+- una base de datos;
+- recuperación de conocimiento mediante RAG;
+- un modelo de lenguaje.
 
 ---
 
 ## Arquitectura
 
-La arquitectura lógica está documentada mediante C4 Model Level 2 y diagramas de secuencia.
-
-Documentos:
-
-- [`docs/architecture.md`](docs/architecture.md)
-- [`docs/sequence-diagram.md`](docs/sequence-diagram.md)
-
-Vista simplificada:
+La solución utiliza la siguiente arquitectura simplificada:
 
 ```text
 Usuario
    |
    v
-Streamlit Web Chat
+Streamlit
    |
    v
-FastAPI Backend
+FastAPI
    |
    v
-Security Gateway
+Control de Seguridad
    |
    v
-AI Agent / Orchestrator
+Agente / Orquestador
    |
-   +------> Business Tools ------> SQLite
+   +------> Herramientas ------> SQLite
    |
-   +------> RAG -----------------> Qdrant
-   |                                ^
-   |                                |
-   |                         Knowledge Base
+   +------> RAG --------------> Qdrant
    |
    +------> Gemini
-               |
-               v
-         Respuesta final
