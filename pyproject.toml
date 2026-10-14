@@ -1,0 +1,29 @@
+[project]
+name = "sales-inventory-ai-agent"
+version = "0.1.0"
+description = "Prototipo académico de un agente IA para ventas e inventario con Tools, RAG, Qdrant y MCP."
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+
+dependencies = [
+    "fastapi",
+    "google-genai",
+    "portalocker==3.2.0",
+    "python-dotenv",
+    "qdrant-client==1.19.1",
+    "sentence-transformers",
+    "torch",
+    "uvicorn",
+    "pywin32==312; platform_system == 'Windows'",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
