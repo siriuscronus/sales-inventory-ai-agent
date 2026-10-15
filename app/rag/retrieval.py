@@ -31,6 +31,8 @@ def search_knowledge(
             "results": [],
             "message": "La consulta no puede estar vacía.",
         }
+    
+    query_vector = embed_text(query)
 
     client = get_qdrant_client()
 
@@ -45,9 +47,6 @@ def search_knowledge(
                     "Ejecute primero la indexación."
                 ),
             }
-
-        # Convertimos la pregunta a un embedding.
-        query_vector = embed_text(query)
 
         # Buscamos en Qdrant los vectores más similares.
         response = client.query_points(
