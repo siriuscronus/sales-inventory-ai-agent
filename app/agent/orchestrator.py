@@ -296,6 +296,15 @@ def is_in_business_domain(query: str) -> bool:
         "flatsheet",
         "flat sheet",
         "strap",
+
+        # Tornillería / fijaciones
+        "screw",
+        "screws",
+        "tornillo",
+        "tornillos",
+        "fastener",
+        "fasteners",
+
         "producto",
         "productos",
         "cotización",
@@ -348,6 +357,14 @@ def is_in_business_domain(query: str) -> bool:
         "sheet",
         "flatsheet",
         "strap",
+
+        # Tornillería / fijaciones
+        "screw",
+        "screws",
+        "tornillo",
+        "tornillos",
+        "fastener",
+        "fasteners",
 
         # Ventas
         "precio",
@@ -467,6 +484,14 @@ PRODUCT_KEYWORDS = [
     "flatsheet",
     "flat sheet",
     "strap",
+
+    # Tornillería / fijaciones
+    "screw",
+    "screws",
+    "tornillo",
+    "tornillos",
+    "fastener",
+    "fasteners",
 ]
 
 
